@@ -1,0 +1,9 @@
+---
+:orm: sequel
+:test: none
+:mock: none
+:script: none
+:renderer: none
+:stylesheet: none
+:namespace: Fuitter
+:migration_format: number
