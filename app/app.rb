@@ -60,5 +60,9 @@ module Fuitter
     #     render 'errors/500'
     #   end
     #
+
+    use OmniAuth::Builder do
+      provider :facebook, '1354728827916287','4412667c2bed46b3ed06d8989305c766'
+    end
   end
 end
