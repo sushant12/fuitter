@@ -1,10 +1,10 @@
 Fuitter::App.controllers :session do
 
   get :auth, map: '/auth/:provider/callback' do
-    auth = request.env['omniauth.auth']
+    auth =  request.env['omniauth.auth']
     account = Account.create_or_find_from_omniauth(auth)
-    session[:account_id] = account.id
-    redirect '/'
+    store_val_in_session(account, auth)
+    redirect '/home/facebook_pages'
   end
 
   get :destroy, map: 'destroy' do
@@ -12,4 +12,11 @@ Fuitter::App.controllers :session do
     redirect '/'
   end
 
+end
+
+private
+
+def store_val_in_session(account, auth)
+  session[:account_id] = account.id
+  session[:facebook_token] = auth['credentials']['token']
 end
