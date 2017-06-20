@@ -8,8 +8,9 @@ A lot of work is yet to be done and I would be more than happy if you could cont
 
 - Clone the repo
 - bundle install
+- Run rake sq:create and rake sq:migrate
 - Copy the .env.example file and rename it to .env
-- Fill in your app id and app secret in .env
+- Fill in your version of data in .env file
 
 ### Things to add
 - FB login (save, destroy session) 

@@ -5,7 +5,6 @@ Sequel.migration do
       String :name
       String :email
       String :uid
-      String :provider
     end
   end
 
