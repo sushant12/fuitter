@@ -62,7 +62,7 @@ module Fuitter
     #
 
     use OmniAuth::Builder do
-      provider :facebook, '1354728827916287','4412667c2bed46b3ed06d8989305c766'
+      provider :facebook, ENV['FACEBOOK_KEY'],ENV['FACEBOOK_SECRET']
     end
   end
 end
