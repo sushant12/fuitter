@@ -19,3 +19,4 @@ gem 'padrino', '0.14.1.1'
 gem 'awesome_print', :require => 'ap', :group => :development
 
 gem 'omniauth-facebook'
+gem 'dotenv'
