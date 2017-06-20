@@ -1,8 +1,7 @@
 Fuitter::App.controllers :session do
 
   get :auth, map: '/auth/:provider/callback' do
-    auth = request.env['omniauth.auth']
-    account = Account.create_or_find_from_omniauth(auth)
+    account = Account.create_or_find_from_omniauth(request.env['omniauth.auth'])
     session[:account_id] = account.id
     redirect '/'
   end
