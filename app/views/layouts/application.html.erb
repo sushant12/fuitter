@@ -3,6 +3,9 @@
   <title>Home</title>
 </head>
 <body>
+<% if current_account %>
+    <a href="/destroy"> Logout</a>
+<% end %>
   <%= yield %>
 </body>
 </html>
