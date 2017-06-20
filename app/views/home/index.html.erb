@@ -1,1 +1,5 @@
-<a href="/auth/facebook"> Fb login </a>
+<a href="/auth/facebook"> Fb login </a> <br>
+<% if session[:account_id] %>
+    <a href="/destroy"> Logout</a>
+<% end %>
+<%= session[:account_id] if session[:account_id] %>
