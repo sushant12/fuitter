@@ -4,6 +4,14 @@ Fuitter is an open source Facebook page to website converter.
 
 A lot of work is yet to be done and I would be more than happy if you could contribute too.
 
+## Getting started
+
+- Clone the repo
+- bundle install
+- Run rake sq:create and rake sq:migrate
+- Copy the .env.example file and rename it to .env
+- Fill in your version of data in .env file
+
 ### Things to add
 - FB login (save, destroy session) 
 - Fetch data from facebook page and show it
