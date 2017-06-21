@@ -1,6 +1,6 @@
 <% @pages.each do |page| %>
   Name: <%= page['name'] %> <br>
   Category: <%= page['category'] %> <br>
-  <a href="">View</a><br>
+  <a href="/<%= page['access_token'] %>/home">View</a><br>
     ---------------------------------- <br>
 <% end %>
