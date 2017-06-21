@@ -13,7 +13,6 @@ A lot of work is yet to be done and I would be more than happy if you could cont
 - Fill in your version of data in .env file
 
 ### Things to add
-- Fetch data from facebook page and show it
 - Save the data in db and images in s3
 - Add a way to add data and pages for the site except from facebook page
 - Create an easy way to reference the data in the template(website)
