@@ -57,4 +57,3 @@ end
 def get_data_for_gallery(obj)
   obj.get_connection('me','albums')
 end
-

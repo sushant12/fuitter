@@ -12,5 +12,12 @@ Fuitter::App.controllers :home do
 end
 
 def list_facebook_pages(obj)
-  obj.get_connections('me','accounts')
+  pages = obj.get_connections('me','accounts')
+  save_pages(pages)
+  pages
+end
+
+
+def save_pages(pages)
+  FacebookPage.save(pages)
 end
