@@ -20,7 +20,6 @@ def get_facebook_pages_from_api(obj)
   save_pages(pages)
 end
 
-
 def save_pages(pages)
   pages.map do |page|
     current_account.add_facebook_page(name: page['name'], category: page['category'], token: page['access_token'])
@@ -32,5 +31,5 @@ def get_facebook_page_from_db
 end
 
 def pages?
-  get_facebook_page_from_db.empty? ? false : true;
+  get_facebook_page_from_db.empty? ? false : true
 end
