@@ -21,28 +21,19 @@ Fuitter::App.controllers :template do
     @news = get_data_for_news || get_page_feed_from_api(Koala::Facebook::API.new(page_token, ENV['FACEBOOK_SECRET']))
     render 'news'
   end
-  #
+
   # get :template_events, map: '/:token/events' do
-  #
   # end
-  #
-  # get :template_gallery, map: '/:token/gallery' do
-  #   @albums = get_data_for_gallery(Koala::Facebook::API.new(params[:token], ENV['FACEBOOK_SECRET']))
-  #   render 'gallery'
-  # end
+
+  get :template_gallery, map: '/:id/gallery' do
+    @albums = get_data_for_gallery || get_albums_from_api(Koala::Facebook::API.new(page_token, ENV['FACEBOOK_SECRET']))
+    render 'gallery'
+  end
 
 end
 
-# def get_data_for_news(obj)
-#   obj.get_connection('me','feed')
-# end
-#
 # def get_data_for_events(obj)
 #   obj.get_connection('me','event')
-# end
-#
-# def get_data_for_gallery(obj)
-#   obj.get_connection('me','albums')
 # end
 
 def get_data_for_home
@@ -64,6 +55,14 @@ def get_data_for_contact
   get_data_for_home
 end
 
+def get_data_for_gallery
+  facebook_page = FacebookPage.find(id: params[:id])
+  albums = facebook_page.albums
+  albums.empty? ? nil : albums
+end
+
+# common data op
+
 def get_data_from_api(obj)
   fields = {fields: 'about,description_html,cover,link,location,website'}
   save_common_page_field (obj.get_object('me',fields))
@@ -73,6 +72,8 @@ def save_common_page_field(fields)
   FacebookPage.where(id: params[:id]).update(about: fields.dig('about'), description_html: fields.dig('description_html'), link: fields.dig('link'), website: fields.dig('website'), cover_image: fields.dig('cover','source'), country: fields.dig('location','country'), city: fields.dig('location','city'))
   get_data_for_home
 end
+
+# page feed op
 
 def get_page_feed_from_api(obj)
   fields = ['created_time','description','name','attachments']
@@ -88,7 +89,22 @@ def save_page_feed(feeds)
 
     facebook_page.add_page_feed(created_time: feed.dig('created_time'), description: feed.dig('description'),name: feed.dig('name'),cover_image: cover_image,attachment_url: attachment_url)
   end
+  get_data_for_news
 end
+
+# album op
+
+def get_albums_from_api(obj)
+  save_albums(obj.get_connection('me','albums'))
+end
+
+def save_albums(albums)
+  facebook_page = FacebookPage.find(id: params[:id])
+  albums.each { |album| facebook_page.add_album(name: album['name'] ) }
+  get_data_for_gallery
+end
+
+
 
 def page_token
   FacebookPage.where(id: params['id']).get(:token)
