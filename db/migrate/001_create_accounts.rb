@@ -2,9 +2,9 @@ Sequel.migration do
   up do
     create_table :accounts do
       primary_key :id
-      String :name
-      String :email
-      String :uid
+      VARCHAR :name
+      VARCHAR :email
+      VARCHAR :uid
     end
   end
 

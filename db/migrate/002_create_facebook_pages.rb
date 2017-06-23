@@ -3,9 +3,9 @@ Sequel.migration do
     create_table :facebook_pages do
       primary_key :id
       foreign_key :account_id, :accounts
-      String :name
-      String :token
-      String :category
+      VARCHAR :name
+      VARCHAR :token
+      VARCHAR :category
     end
   end
 

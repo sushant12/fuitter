@@ -1,0 +1,12 @@
+db:seed
+routes[query]
+routes:app[app]
+secret
+sq:create
+sq:drop
+sq:migrate
+sq:migrate:auto
+sq:migrate:down
+sq:migrate:to[version]
+sq:migrate:up
+sq:reset
