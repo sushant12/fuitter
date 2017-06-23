@@ -1,14 +1,13 @@
 Sequel.migration do
   up do
-    create_table :accounts do
+    create_table :albums do
       primary_key :id
+      foreign_key :facebook_page_id, :facebook_pages
       VARCHAR :name
-      VARCHAR :email
-      VARCHAR :uid
     end
   end
 
   down do
-    drop_table :accounts
+    drop_table :albums
   end
 end
