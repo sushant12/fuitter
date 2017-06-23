@@ -6,15 +6,15 @@ Fuitter::App.controllers :template do
     render 'home'
   end
 
-  # get :template_about, map: '/:token/about' do
-  #   @about = get_data_for_about(Koala::Facebook::API.new(params[:token], ENV['FACEBOOK_SECRET']))
-  #   render 'about'
-  # end
-  #
-  # get :template_contact, map: '/:token/contact' do
-  #   @contact = get_data_for_contact(Koala::Facebook::API.new(params[:token], ENV['FACEBOOK_SECRET']))
-  #   render 'contact'
-  # end
+  get :template_about, map: '/:id/about' do
+    @about = get_data_for_about || get_data_from_api(Koala::Facebook::API.new(page_token, ENV['FACEBOOK_SECRET']))
+    render 'about'
+  end
+
+  get :template_contact, map: '/:id/contact' do
+    @contact = get_data_for_contact || get_data_from_api(Koala::Facebook::API.new(page_token, ENV['FACEBOOK_SECRET']))
+    render 'contact'
+  end
   #
   # get :template_news, map: '/:token/news' do
   #   @news = get_data_for_news(Koala::Facebook::API.new(params[:token], ENV['FACEBOOK_SECRET']))
@@ -57,6 +57,14 @@ end
 def get_data_for_home
   facebook_page = FacebookPage.find(id: params['id'])
   facebook_page.about ? facebook_page : nil
+end
+
+def get_data_for_about
+  get_data_for_home
+end
+
+def get_data_for_contact
+  get_data_for_home
 end
 
 def get_data_from_api(obj)
