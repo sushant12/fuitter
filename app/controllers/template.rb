@@ -15,11 +15,12 @@ Fuitter::App.controllers :template do
     @contact = get_data_for_contact || get_data_from_api(Koala::Facebook::API.new(page_token, ENV['FACEBOOK_SECRET']))
     render 'contact'
   end
-  #
-  # get :template_news, map: '/:token/news' do
-  #   @news = get_data_for_news(Koala::Facebook::API.new(params[:token], ENV['FACEBOOK_SECRET']))
-  #   render 'news'
-  # end
+
+  get :template_news, map: '/:id/news' do
+    ap get_data_for_news
+    @news = get_data_for_news || get_page_feed_from_api(Koala::Facebook::API.new(page_token, ENV['FACEBOOK_SECRET']))
+    render 'news'
+  end
   #
   # get :template_events, map: '/:token/events' do
   #
@@ -31,17 +32,7 @@ Fuitter::App.controllers :template do
   # end
 
 end
-#
-# def get_data_for_about(obj)
-#   fields = {fields: 'name,about,description_html,cover'}
-#   obj.get_object('me',fields)
-# end
-#
-# def get_data_for_contact(obj)
-#   fields = {fields: 'name,about,link,location,website'}
-#   obj.get_object('me', fields)
-# end
-#
+
 # def get_data_for_news(obj)
 #   obj.get_connection('me','feed')
 # end
@@ -59,6 +50,12 @@ def get_data_for_home
   facebook_page.about ? facebook_page : nil
 end
 
+def get_data_for_news
+  facebook_page = FacebookPage.find(id: params['id'])
+  page_feed = facebook_page.page_feeds
+  page_feed.empty?? nil : page_feed
+end
+
 def get_data_for_about
   get_data_for_home
 end
@@ -73,8 +70,24 @@ def get_data_from_api(obj)
 end
 
 def save_common_page_field(fields)
-  FacebookPage.where(id: params[:id]).update(about: fields.dig('about'), description_html: fields.dig('description_html'), link: fields.dig('link'), website: fields.dig('website'), cover_image: fields.dig('cover').dig('source'), country: fields.dig('location').dig('country'), city: fields.dig('location').dig('city'))
+  FacebookPage.where(id: params[:id]).update(about: fields.dig('about'), description_html: fields.dig('description_html'), link: fields.dig('link'), website: fields.dig('website'), cover_image: fields.dig('cover','source'), country: fields.dig('location','country'), city: fields.dig('location','city'))
   get_data_for_home
+end
+
+def get_page_feed_from_api(obj)
+  fields = ['created_time','description','name','attachments']
+  save_page_feed (obj.get_connection('me','feed',{fields: fields}))
+end
+
+def save_page_feed(feeds)
+  facebook_page = FacebookPage.find(id:params['id'])
+  feeds.each do |feed|
+    # check if attachment exist
+    cover_image =  feed.dig('attachments','data')[0].dig('media','image','src') if feed.dig('attachments','data')
+    attachment_url = feed.dig('attachments','data')[0].dig('url') if feed.dig('attachments','data')
+
+    facebook_page.add_page_feed(created_time: feed.dig('created_time'), description: feed.dig('description'),name: feed.dig('name'),cover_image: cover_image,attachment_url: attachment_url)
+  end
 end
 
 def page_token

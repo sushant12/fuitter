@@ -1,3 +1,7 @@
 <% @news.each do |item| %>
-  <%= item['story'] %> <br>
+  <%= item.created_time %> <br>
+  <%= item.description %> <br>
+  <%= item.name %> <br>
+  <%= item.attachment_url %> <br>
+  <image src=<%= item.cover_image %> ></image>
 <% end %>
