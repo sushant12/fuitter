@@ -30,6 +30,11 @@ Fuitter::App.controllers :template do
     render 'gallery'
   end
 
+  get :template_photos, map: '/:id/gallery/:album_id/photos' do
+    @photos =  list_photos
+    render 'photos'
+  end
+
 end
 
 # def get_data_for_events(obj)
@@ -95,16 +100,39 @@ end
 # album op
 
 def get_albums_from_api(obj)
-  save_albums(obj.get_connection('me','albums'))
+  save_albums(obj.get_connection('me','albums'), obj)
 end
 
-def save_albums(albums)
+def save_albums(albums, obj)
   facebook_page = FacebookPage.find(id: params[:id])
-  albums.each { |album| facebook_page.add_album(name: album['name'] ) }
+  albums.each do |album|
+    id = facebook_page.add_album(name: album['name']).id
+    find_large_image_url(obj,album,id)
+  end
   get_data_for_gallery
 end
 
+def find_large_image_url(obj,album,id)
+  fields = {fields: 'webp_images'}
+  photos =  obj.get_connection(album['id'],'photos',fields)
+  photos.each do |v|
+    # find the sum of height and width of each image collection to return the image with higher resolution
+    sum = v['webp_images'].map { |v| v['height'] + v['width']}
+    index = sum.each.with_index.max[1]
+    img = v['webp_images'][index]['source']
+    save_photos(id,img)
+  end
+end
 
+def save_photos(id,img)
+  album = Album.find(id: id)
+  album.add_picture(url: img)
+end
+
+def list_photos
+  album = Album.find(id: params[:album_id])
+  album.pictures
+end
 
 def page_token
   FacebookPage.where(id: params['id']).get(:token)
