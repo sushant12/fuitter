@@ -9,11 +9,11 @@ A lot of work is yet to be done and I would be more than happy if you could cont
 - Clone the repo
 - bundle install
 - Run rake sq:create and rake sq:migrate
-- Copy the .env.example file and rename it to .env
+- Copy the .env.sample file and rename it to .env
 - Fill in your version of data in .env file
 
-### Things to add
-- Save the data in db and images in s3
+### Things left to add
+- Add a sync btn to update the db with facebook page
 - Add a way to add data and pages for the site except from facebook page
 - Create an easy way to reference the data in the template(website)
 - Create an HTML editor (this is gona take some time)
