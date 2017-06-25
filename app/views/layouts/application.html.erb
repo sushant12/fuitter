@@ -4,7 +4,7 @@
 </head>
 <body>
 <% if current_account %>
-    <a href="/destroy"> Logout</a>
+  <%= link_to 'Logout', url(:session, :destroy) %>
 <% end %>
   <%= yield %>
 </body>
