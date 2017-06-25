@@ -6,14 +6,16 @@ module Fuitter
         save_pages(pages)
       end
 
+      def get_facebook_page_from_db
+        current_account.facebook_pages
+      end
+
+      private
+
       def save_pages(pages)
         pages.map do |page|
           current_account.add_facebook_page(name: page['name'], category: page['category'], token: page['access_token'])
         end
-      end
-
-      def get_facebook_page_from_db
-        current_account.facebook_pages
       end
     end
     helpers HomeHelper
