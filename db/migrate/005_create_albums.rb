@@ -3,7 +3,7 @@ Sequel.migration do
     create_table :albums do
       primary_key :id
       foreign_key :facebook_page_id, :facebook_pages
-      VARCHAR :name
+      String :name
     end
   end
 
