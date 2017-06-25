@@ -5,9 +5,9 @@ Sequel.migration do
       foreign_key :facebook_page_id, :facebook_pages
       column :created_time, 'timestamp'
       String :description
-      VARCHAR :name
-      VARCHAR :cover_image
-      VARCHAR :attachment_url
+      String :name
+      String :cover_image
+      String :attachment_url
     end
   end
 

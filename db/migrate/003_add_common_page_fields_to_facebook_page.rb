@@ -3,11 +3,11 @@ Sequel.migration do
     alter_table :facebook_pages do
       add_column :description_html, String
       add_column :about, String
-      add_column :link, String, size: 255
-      add_column :website, String, size: 255
-      add_column :country, String, size: 255
-      add_column :city, String, size: 255
-      add_column :cover_image, String, size: 255
+      add_column :link, String
+      add_column :website, String
+      add_column :country, String
+      add_column :city, String
+      add_column :cover_image, String
     end
   end
 
