@@ -33,10 +33,6 @@ module Fuitter
         album.pictures
       end
 
-      # def get_albums_from_api(obj)
-      #   save_albums(obj.get_connection('me','albums'), obj)
-      # end
-
       def page_token
         FacebookPage.where(id: params['id']).get(:token)
       end
