@@ -2,7 +2,7 @@
 
 module Fuitter
   class App
-    module TemplateHelper
+    module PageHelper
       def get_data_for_home
         facebook_page = FacebookPage.find(id: params['id'])
         facebook_page.about ? facebook_page : nil
@@ -66,6 +66,6 @@ module Fuitter
 
     end
 
-    helpers TemplateHelper
+    helpers PageHelper
   end
 end

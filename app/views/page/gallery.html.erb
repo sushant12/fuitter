@@ -1,3 +1,3 @@
 <% @albums.each do |item| %>
-    <a href="/<%= params[:id] %>/gallery/<%= item.id %>/photos"><%= item.name %></a> <br>
+    <%= link_to item.name, url(:page, :page_photos, :id => params[:id], :album_id => item.id) %> <br>
 <% end %>
