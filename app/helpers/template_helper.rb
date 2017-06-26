@@ -25,7 +25,7 @@ module Fuitter
       def get_data_for_gallery
         facebook_page = FacebookPage.find(id: params[:id])
         albums = facebook_page.albums
-        albums.empty? ? nil : albums
+        albums.any? ? albums : nil
       end
 
       def list_photos
@@ -33,41 +33,12 @@ module Fuitter
         album.pictures
       end
 
-      def get_albums_from_api(obj)
-        save_albums(obj.get_connection('me','albums'), obj)
-      end
-
-      def get_data_from_api(obj)
-        fields = {fields: 'about,description_html,cover,link,location,website'}
-        save_common_page_field (obj.get_object('me',fields))
-      end
-
-      def get_page_feed_from_api(obj)
-        fields = ['created_time','description','name','attachments']
-        save_page_feed (obj.get_connection('me','feed',{fields: fields}))
-      end
+      # def get_albums_from_api(obj)
+      #   save_albums(obj.get_connection('me','albums'), obj)
+      # end
 
       def page_token
         FacebookPage.where(id: params['id']).get(:token)
-      end
-
-      private
-
-      def save_common_page_field(fields)
-        FacebookPage.where(id: params[:id]).update(about: fields.dig('about'), description_html: fields.dig('description_html'), link: fields.dig('link'), website: fields.dig('website'), cover_image: fields.dig('cover','source'), country: fields.dig('location','country'), city: fields.dig('location','city'))
-        get_data_for_home
-      end
-
-      def save_page_feed(feeds)
-        facebook_page = FacebookPage.find(id:params['id'])
-        feeds.each do |feed|
-          # check if attachment exist
-          cover_image =  feed.dig('attachments','data')[0].dig('media','image','src') if feed.dig('attachments','data')
-          attachment_url = feed.dig('attachments','data')[0].dig('url') if feed.dig('attachments','data')
-
-          facebook_page.add_page_feed(created_time: feed.dig('created_time'), description: feed.dig('description'),name: feed.dig('name'),cover_image: cover_image,attachment_url: attachment_url)
-        end
-        get_data_for_news
       end
 
       def save_albums(albums, obj)
