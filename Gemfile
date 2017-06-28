@@ -16,7 +16,16 @@ gem 'sequel'
 # Padrino Stable Gem
 gem 'padrino', '0.14.1.1'
 
-gem 'awesome_print', :require => 'ap', :group => :development
-
 gem 'omniauth-facebook'
 gem 'dotenv'
+
+group :test do
+  gem 'codecov', :require => false
+  gem 'test-unit'
+  gem 'rack-test'
+end
+
+group :development do
+  gem 'awesome_print', :require => 'ap'
+  gem 'pry'
+end
