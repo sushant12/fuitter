@@ -21,7 +21,7 @@ gem 'dotenv'
 
 group :test do
   gem 'codecov', :require => false
-  gem 'test-unit'
+  gem "minitest"
   gem 'rack-test'
 end
 
