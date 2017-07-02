@@ -21,8 +21,8 @@ gem 'dotenv'
 
 group :test do
   gem 'codecov', :require => false
-  gem "minitest"
-  gem 'rack-test'
+  gem 'rspec'
+  gem 'webmock'
 end
 
 group :development do
