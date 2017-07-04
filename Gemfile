@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Padrino supports Ruby version 1.9 and later
 ruby '2.4.0'
-gem "koala"
+gem 'koala'
 # Project requirements
 gem 'rake'
 
