@@ -63,6 +63,21 @@ module Fuitter
         album.add_picture(url: img)
       end
 
+      def save_common_page_field(fields)
+        FacebookPage.where(id: params[:id]).update(about: fields.dig('about'), description_html: fields.dig('description_html'), link: fields.dig('link'), website: fields.dig('website'), cover_image: fields.dig('cover','source'), country: fields.dig('location','country'), city: fields.dig('location','city'))
+      end
+
+      def save_page_feed(feeds)
+        facebook_page = FacebookPage.find(id:params['id'])
+        feeds['feed']['data'].each do |feed|
+          # check if attachment exist
+          cover_image =  feed.dig('attachments','data')[0].dig('media','image','src') if feed.dig('attachments','data')
+          attachment_url = feed.dig('attachments','data')[0].dig('url') if feed.dig('attachments','data')
+
+          facebook_page.add_page_feed(created_time: feed.dig('created_time'), description: feed.dig('description'),name: feed.dig('name'),cover_image: cover_image,attachment_url: attachment_url)
+        end
+      end
+
 
     end
 

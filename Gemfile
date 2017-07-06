@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Padrino supports Ruby version 1.9 and later
 ruby '2.4.0'
-gem "koala"
+gem 'koala'
 # Project requirements
 gem 'rake'
 
@@ -16,7 +16,16 @@ gem 'sequel'
 # Padrino Stable Gem
 gem 'padrino', '0.14.1.1'
 
-gem 'awesome_print', :require => 'ap', :group => :development
-
 gem 'omniauth-facebook'
 gem 'dotenv'
+
+group :test do
+  gem 'codecov', :require => false
+  gem 'rspec'
+  gem 'webmock'
+end
+
+group :development do
+  gem 'awesome_print', :require => 'ap'
+  gem 'pry'
+end

@@ -1,3 +1,4 @@
+# (I have paused the development of fuitter for a while. Gona be back after a while)
 ## Fuitter
 
 Fuitter is an open source Facebook page to website converter.
