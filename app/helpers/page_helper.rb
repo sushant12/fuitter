@@ -69,7 +69,7 @@ module Fuitter
 
       def save_page_feed(feeds)
         facebook_page = FacebookPage.find(id:params['id'])
-        feeds.each do |feed|
+        feeds['feed']['data'].each do |feed|
           # check if attachment exist
           cover_image =  feed.dig('attachments','data')[0].dig('media','image','src') if feed.dig('attachments','data')
           attachment_url = feed.dig('attachments','data')[0].dig('url') if feed.dig('attachments','data')
