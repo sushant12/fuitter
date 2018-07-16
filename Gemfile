@@ -1,31 +1,27 @@
 source 'https://rubygems.org'
 
-# Padrino supports Ruby version 1.9 and later
-ruby '2.4.0'
-gem 'koala'
-# Project requirements
-gem 'rake'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
 
-gem 'puma'
-# Component requirements
+
+gem 'rails', '~> 5.1.6'
 gem 'pg'
-gem 'sequel'
+gem 'puma', '~> 3.7'
+gem 'koala', '3.0.0'
+gem 'omniauth-facebook', '5.0.0'
+gem 'devise_token_auth', '0.1.43'
 
-# Test requirements
-
-# Padrino Stable Gem
-gem 'padrino', '0.14.1.1'
-
-gem 'omniauth-facebook'
-gem 'dotenv'
-
-group :test do
-  gem 'codecov', :require => false
-  gem 'rspec'
-  gem 'webmock'
+group :development, :test do
+  gem 'pry'
 end
 
 group :development do
-  gem 'awesome_print', :require => 'ap'
-  gem 'pry'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
