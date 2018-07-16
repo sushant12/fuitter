@@ -1,6 +1,0 @@
-<% @pages.each do |page| %>
-  Name: <%= page.name %> <br>
-  Category: <%= page.category %> <br>
-    <%= link_to 'View', url_for(:page,:page_home, :id => page.id) %> <br>
-    ---------------------------------- <br>
-<% end %>
