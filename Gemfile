@@ -11,6 +11,7 @@ gem 'puma', '~> 3.7'
 gem 'koala', '3.0.0'
 gem 'sorcery', '0.12.0'
 gem 'dotenv-rails', '2.5.0'
+gem 'jwt'
 group :development, :test do
   gem 'pry'
 end
