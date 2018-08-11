@@ -8,14 +8,10 @@ class OauthsController < ApplicationController
 
   def callback
     provider = params[:provider]
-    if @user = login_from(provider)
-      token = JsonWebToken.encode({user_id: @user.id})
-      render json: {success: true, token: token}
-    else
-      @user = save_user(provider)
-      token = JsonWebToken.encode({user_id: @user.id})
-      render json: {success: true, token: token}
-    end
+    user = login_from(provider)
+    @user = user ? user : save_user(provider) 
+    token = JsonWebToken.encode({user_id: @user.id})
+    render json: {success: true, token: token}
   end
 
   private
