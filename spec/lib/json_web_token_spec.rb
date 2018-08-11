@@ -1,5 +1,5 @@
 require 'rails_helper'
-# require_relative '../../lib/'
+
 describe JsonWebToken do
   
   let(:token) { JsonWebToken.encode({user_id: 1}) }
